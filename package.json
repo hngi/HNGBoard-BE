@@ -1,0 +1,36 @@
+{
+  "name": "hngboard",
+  "version": "1.0.0",
+  "description": "The backend for the new HNG board",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./bin/www.js",
+    "startDev": "nodemon ./bin/www.js",
+    "lint": "eslint \"./**/*.js\"",
+    "lint:fix": "eslint --fix \"./**/*.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hngi/HNGBoard-BE.git"
+  },
+  "author": "HNG i7",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hngi/HNGBoard-BE/issues"
+  },
+  "homepage": "https://github.com/hngi/HNGBoard-BE#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.25"
+  },
+  "devDependencies": {
+    "eslint": "^7.5.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.0.5"
+  }
+}
