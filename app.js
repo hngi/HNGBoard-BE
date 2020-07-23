@@ -6,7 +6,13 @@ const CustomError = require("./utils/customError");
 const errorHandler = require("./utils/errorhandler");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = YAML.load("docs/swagger.yaml");
-
+const {
+  adminRouter,
+  postRouter,
+  submissionRouter,
+  taskRouter,
+  userRouter,
+} = require("./routes");
 const app = express();
 
 // setup middleware
@@ -15,7 +21,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 //setup app routes
-app.get("/", (req, res) => res.send("Hello world"));
+app.use("/admins", adminRouter);
+app.use("/posts", postRouter);
+app.use("/submissions", submissionRouter);
+app.use("/tasks", taskRouter);
+app.use("/users", userRouter);
+
+app.get("/", (req, res) => res.redirect("/docs"));
 
 app.use(
   ["/docs", "/api/v1/docs"],
