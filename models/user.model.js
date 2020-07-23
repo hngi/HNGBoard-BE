@@ -12,41 +12,48 @@ const userSchema = new Schema(
     hngId: {
       type: String,
       required: true,
+      unique: true,
     },
     password: {
       type: String,
       required: true,
       trim: true,
     },
-    passwordConfirm: {
+    firstName: {
       type: String,
       required: true,
     },
-    role: {
+    lastName: {
       type: String,
-      enum: ["USER", "ADMIN", "SUPER-ADMIN"],
-      default: "USER",
+      required: true,
     },
-    isVerified: {
-      type: Boolean,
-      default: false,
+    phoneNumber: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    bio: {
+      type: String,
     },
     status: {
       type: String,
       enum: ["active", "inactive"],
       default: "active",
     },
-    profile: {
-      type: Schema.Types.ObjectId,
-      ref: "Profile",
-    },
+    currentStage: { type: Number, required: true },
     tracks: [
       {
         type: Schema.Types.ObjectId,
         ref: "Track",
       },
     ],
-    tasks: [
+    completedTasks: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Task",
+      },
+    ],
+    pendingTasks: [
       {
         type: Schema.Types.ObjectId,
         ref: "Task",
