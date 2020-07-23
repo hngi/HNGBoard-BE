@@ -1,0 +1,30 @@
+openapi: 3.0.0
+info:
+  version: 1.0.1
+  title: HNG BOARD API documentation
+  description: Hng Board API endpoints.
+servers:
+  - url: '{protocol}://{host}:{port}/'
+    description: Development server (uses test data)
+    variables:
+      port:
+        enum:
+          - ''
+          - '4000'
+          - '4001'
+        default: ''
+      protocol:
+        enum:
+          - 'http'
+          - 'https'
+        default: 'http'
+      host:
+        enum:
+          - '127.0.0.1'
+          - 'hng-board.herokuapp.com'
+        default: '127.0.0.1'
+
+components:
+
+paths:
+    /api/v1/auth/register:

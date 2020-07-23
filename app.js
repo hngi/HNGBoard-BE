@@ -1,9 +1,12 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const YAML = require("yamljs");
 const CustomError = require("./utils/customError");
 const errorHandler = require("./utils/errorhandler");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = YAML.load("docs/swagger.yaml");
 
-require("dotenv").config();
 const app = express();
 
 // setup middleware
@@ -13,6 +16,12 @@ app.use(cors());
 
 //setup app routes
 app.get("/", (req, res) => res.send("Hello world"));
+
+app.use(
+  ["/docs", "/api/v1/docs"],
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument)
+);
 
 // Invalid route error handler
 app.use("*", (req, res, next) => {
