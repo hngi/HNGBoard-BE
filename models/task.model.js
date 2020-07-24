@@ -6,6 +6,7 @@ const taskSchema = new Schema({
   deadline: { type: Date, required: true },
   track: { type: Schema.Types.ObjectId, ref: "Track", required: true },
   admins: [{ type: Schema.Types.ObjectId, ref: "Admin" }],
+  users: [{ type: Schema.Types.ObjectId, ref: "User" }],
   submissions: [{ type: Schema.Types.ObjectId, ref: "Submission" }],
 });
 
