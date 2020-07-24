@@ -27,13 +27,12 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    phoneNumber: {
-      type: String,
-      required: true,
-      trim: true,
-    },
     bio: {
       type: String,
+    },
+    location: {
+      type: String,
+      required: true,
     },
     status: {
       type: String,
@@ -45,18 +44,6 @@ const userSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "Track",
-      },
-    ],
-    completedTasks: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Task",
-      },
-    ],
-    pendingTasks: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Task",
       },
     ],
   },
