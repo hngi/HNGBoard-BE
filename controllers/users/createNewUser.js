@@ -50,13 +50,13 @@ const createNewUser = [
         tracks: userTracks.map((track) => track._id),
       });
       await user.save();
-      const token = generateToken({ id: user._id, email }, USER_SECRET);
+      const token = generateToken({ userId: user._id, email }, USER_SECRET);
       return responseHandler(
         res,
         201,
         {
           ...userObject,
-          id: user._id,
+          userId: user._id,
           token,
           tracks: userTracks.map((track) => ({
             id: track._id,

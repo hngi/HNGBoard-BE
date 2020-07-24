@@ -39,16 +39,23 @@ const loginUser = [
       }
 
       const token = generateToken(
-        { id: user._id, email: req.body.email },
+        { userId: user._id, email: req.body.email },
         USER_SECRET
       );
 
       /* eslint-disable no-unused-vars */
-      const { __v, password, createdAt, updatedAt, ...rest } = user.toObject();
+      const {
+        __v,
+        password,
+        createdAt,
+        updatedAt,
+        _id,
+        ...rest
+      } = user.toObject();
       return responseHandler(
         res,
         200,
-        { ...rest, token },
+        { ...rest, userId: _id, token },
         "successfully logged in"
       );
     } catch (err) {
