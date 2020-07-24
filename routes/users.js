@@ -1,7 +1,10 @@
 const router = require("express").Router();
 const { authorizeUser } = require("../middlewares/auth");
-const createNewUser = require("../controllers/users/createNewUser");
-const loginUser = require("../controllers/users/loginUser");
+const {
+  createNewUser,
+  loginUser,
+  getUserTasks,
+} = require("../controllers/users");
 // add new user
 router.post("/new", createNewUser);
 
@@ -16,6 +19,6 @@ router.patch("/:userId", () => {});
 router.post("/:userId/submissions", () => {});
 
 // get all task for user
-router.get("/:userId/tasks", () => {});
+router.get("/:userId/tasks", getUserTasks);
 
 module.exports = router;
