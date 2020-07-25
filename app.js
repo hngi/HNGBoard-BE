@@ -13,6 +13,7 @@ const {
   taskRouter,
   userRouter,
 } = require("./routes");
+const getAllTracks = require("./controllers/getAllTracks");
 const app = express();
 
 // setup middleware
@@ -26,6 +27,7 @@ app.use("/posts", postRouter);
 app.use("/submissions", submissionRouter);
 app.use("/tasks", taskRouter);
 app.use("/users", userRouter);
+app.get("/tracks", getAllTracks);
 
 app.get("/", (req, res) => res.redirect("/docs"));
 
