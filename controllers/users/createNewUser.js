@@ -55,9 +55,10 @@ const createNewUser = [
         res,
         201,
         {
-          ...userObject,
           userId: user._id,
+          hngId,
           token,
+          currentStage: 0,
           tracks: userTracks.map((track) => ({
             id: track._id,
             name: track.name,

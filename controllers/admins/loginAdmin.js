@@ -1,36 +1,30 @@
-const { body, validationResult } = require("express-validator");
-const { User } = require("../../models");
+const { body } = require("express-validator");
+const { Admin, Task } = require("../../models");
 const { comparePassword } = require("../../utils/password");
 const CustomError = require("../../utils/customError");
 const responseHandler = require("../../utils/responseHandler");
 const generateToken = require("../../utils/generateToken");
-const { USER_SECRET } = require("../../config");
+const validateMW = require("../../middlewares/validate");
+const { ADMIN_SECRET } = require("../../config");
 
-const loginUser = [
+const loginAdmin = [
   body("email", "invalid email").isEmail(),
   body("password", "enter password equal to or longer than 8").isLength({
     min: 8,
   }),
+  validateMW,
   async (req, res, next) => {
     try {
-      const errors = validationResult(req);
+      const admin = await Admin.findOne({ email: req.body.email });
 
-      if (!errors.isEmpty()) {
-        return next(new CustomError(422, "invalid inputs", errors.array()));
-      }
-
-      const user = await User.findOne({ email: req.body.email })
-        .populate("tracks", "_id name")
-        .exec();
-
-      if (!user) {
+      if (!admin) {
         return next(
           new CustomError(403, "incorrect email/password combination")
         );
       }
       const passwordMatched = await comparePassword(
         req.body.password,
-        user.password
+        admin.password
       );
       if (!passwordMatched) {
         return next(
@@ -38,30 +32,27 @@ const loginUser = [
         );
       }
 
+      /* eslint-disable no-unused-vars */
+      const adminTasks = await Task.find({
+        admins: { $elemMatch: { $eq: admin._id } },
+      })
+        .select("name deadline track submissions")
+        .exec();
+
       const token = generateToken(
-        { userId: user._id, email: req.body.email },
-        USER_SECRET
+        { adminId: admin._id, email: req.body.email },
+        ADMIN_SECRET
       );
 
-      /* eslint-disable no-unused-vars */
-      const {
-        __v,
-        password,
-        createdAt,
-        updatedAt,
-        _id,
-        ...rest
-      } = user.toObject();
+      const responseObject = {
+        adminId: admin._id,
+        token,
+      };
+
       return responseHandler(
         res,
         200,
-        {
-          userId: _id,
-          hngId: user.hngId,
-          currentStage: user.currentStage,
-          tracks: user.tracks,
-          token,
-        },
+        responseObject,
         "successfully logged in"
       );
     } catch (err) {
@@ -70,4 +61,4 @@ const loginUser = [
   },
 ];
 
-module.exports = loginUser;
+module.exports = loginAdmin;
