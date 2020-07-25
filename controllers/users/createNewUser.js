@@ -19,11 +19,11 @@ const createNewUser = [
   body("bio", "cannot be empty").not().isEmpty().optional(),
   body("userName", "cannot be empty").not().isEmpty(),
   body("location", "cannot be empty").not().isEmpty(),
-  body("track", "missing track").not().isEmpty(),
+  body("trackId", "invalid track id").isMongoId(),
   validate,
   async (req, res, next) => {
     try {
-      const track = await Track.findOne({ name: req.body.track });
+      const track = await Track.findById(req.body.trackId);
       const generalTrack = await Track.findOne({ name: "general" });
       const userTracks = [track, generalTrack];
 
