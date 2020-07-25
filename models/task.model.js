@@ -9,6 +9,7 @@ const taskSchema = new Schema(
     track: { type: Schema.Types.ObjectId, ref: "Track", required: true },
     admins: [{ type: Schema.Types.ObjectId, ref: "Admin", required: true }],
     users: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
+    general: { type: Boolean, default: false, required: true },
     submissions: [
       { type: Schema.Types.ObjectId, ref: "Submission", required: true },
     ],
