@@ -5,6 +5,7 @@ const {
   loginUser,
   getUserTasks,
 } = require("../controllers/users");
+const submitTask = require("../controllers/users/submitTask");
 // add new user
 router.post("/register", createNewUser);
 
@@ -16,7 +17,7 @@ router.use(authorizeUser);
 router.patch("/:userId", () => {});
 
 // submit task for user
-router.post("/:userId/tasks/:taskId/submissions", () => {});
+router.post("/:userId/tasks/:taskId/submissions", submitTask);
 
 // get all task for user
 router.get("/:userId/tasks", getUserTasks);

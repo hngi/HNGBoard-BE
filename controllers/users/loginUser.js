@@ -55,7 +55,13 @@ const loginUser = [
       return responseHandler(
         res,
         200,
-        { ...rest, userId: _id, token },
+        {
+          userId: _id,
+          hngId: user.hngId,
+          currentStage: user.currentStage,
+          tracks: user.tracks,
+          token,
+        },
         "successfully logged in"
       );
     } catch (err) {

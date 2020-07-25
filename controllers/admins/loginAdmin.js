@@ -32,6 +32,7 @@ const loginAdmin = [
         );
       }
 
+      /* eslint-disable no-unused-vars */
       const adminTasks = await Task.find({
         admins: { $elemMatch: { $eq: admin._id } },
       })
@@ -43,12 +44,8 @@ const loginAdmin = [
         ADMIN_SECRET
       );
 
-      /* eslint-disable no-unused-vars */
       const responseObject = {
         adminId: admin._id,
-        firstName: admin.firstName,
-        lastName: admin.lastName,
-        adminTasks,
         token,
       };
 

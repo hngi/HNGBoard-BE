@@ -33,9 +33,6 @@ const createNewAdmin = [
         201,
         {
           adminId: admin._id,
-          email,
-          firstName,
-          lastName,
           token,
         },
         "admin created successfully"
