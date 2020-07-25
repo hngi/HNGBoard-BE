@@ -6,6 +6,7 @@ const CustomError = require("./utils/customError");
 const errorHandler = require("./utils/errorhandler");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = YAML.load("docs/swagger.yaml");
+const morgan = require("morgan");
 const {
   adminRouter,
   postRouter,
@@ -16,11 +17,13 @@ const {
 const getAllTracks = require("./controllers/getAllTracks");
 const app = express();
 
+morgan.token("reqBody", (req) => JSON.stringify(req.body, null, 2));
 // setup middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
+app.use(morgan(":reqBody"));
 //setup app routes
 app.use("/admins", adminRouter);
 app.use("/posts", postRouter);
