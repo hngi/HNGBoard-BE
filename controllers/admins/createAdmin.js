@@ -40,8 +40,10 @@ const createNewAdmin = [
     } catch (err) {
       return next(
         new CustomError(
-          500,
-          "Something went wrong, please try again later",
+          err.code === 11000 ? 400 : 500,
+          err.code === 11000
+            ? "Email already in use, please try another"
+            : "Something went wrong, please try again later",
           err
         )
       );
