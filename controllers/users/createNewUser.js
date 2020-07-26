@@ -19,11 +19,11 @@ const createNewUser = [
   body("bio", "cannot be empty").not().isEmpty().optional(),
   body("userName", "cannot be empty").not().isEmpty(),
   body("location", "cannot be empty").not().isEmpty(),
-  body("track", "missing track").not().isEmpty(),
+  body("trackId", "invalid track id").isMongoId(),
   validate,
   async (req, res, next) => {
     try {
-      const track = await Track.findOne({ name: req.body.track });
+      const track = await Track.findById(req.body.trackId);
       const generalTrack = await Track.findOne({ name: "general" });
       const userTracks = [track, generalTrack];
 
@@ -69,8 +69,10 @@ const createNewUser = [
     } catch (err) {
       return next(
         new CustomError(
-          500,
-          "Something went wrong, please try again later",
+          err.code === 11000 ? 400 : 500,
+          err.code === 11000
+            ? "Email already in use, please try another"
+            : "Something went wrong, please try again later",
           err
         )
       );
